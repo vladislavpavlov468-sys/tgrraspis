@@ -1,0 +1,17 @@
+.main-content{min-width:0}
+.calendar-grid{min-width:0}
+.calendar-day{min-width:0;min-height:190px;padding:10px;overflow:hidden}
+.calendar-date{display:flex;align-items:baseline;gap:6px}
+.calendar-date strong{font-size:15px}
+.calendar-date span{font-size:10px;color:var(--muted)}
+.calendar-events{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.calendar-event{display:flex;flex-direction:column;gap:3px;margin-top:0;padding:7px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:10px;line-height:1.25}
+.calendar-event span{font-size:9px;font-weight:800}
+.calendar-event b{font-size:10px;color:var(--text);overflow-wrap:anywhere}
+.calendar-event small{font-size:9px;color:var(--muted)}
+.calendar-empty{margin-top:12px;color:var(--muted);font-size:10px}
+@media(max-width:680px){.calendar-day{min-height:130px;padding:7px}.calendar-event{font-size:9px;padding:5px}.calendar-event b{font-size:9px}.calendar-event small{font-size:8px}}
+
+@media(max-width:680px){
+  .today-card .lesson-room{display:block;grid-column:2;justify-self:start;margin-top:4px;white-space:normal;font-size:10px;padding:4px 7px}
+}

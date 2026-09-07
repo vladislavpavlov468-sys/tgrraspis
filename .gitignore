@@ -1,0 +1,6 @@
+tmp_pdf_schedule/
+.vercel/
+node_modules/
+.env
+.env.*
+!.env.example

@@ -1,0 +1,16 @@
+{
+  "name": "Дневник студента",
+  "short_name": "Дневник",
+  "description": "Расписание, задания, оценки и учебные долги группы ТГР-26-1",
+  "lang": "ru",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f8fc",
+  "theme_color": "#5b5ce2",
+  "icons": [{
+    "src": "icon.svg",
+    "sizes": "any",
+    "type": "image/svg+xml",
+    "purpose": "any maskable"
+  }]
+}

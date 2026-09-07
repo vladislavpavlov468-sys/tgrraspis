@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f8fc" />
+    <meta name="description" content="Персональный учебный дневник студента группы ТГР-26-1" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <title>Дневник — ТГР-26-1</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="calendar-overrides.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand-mark">Д</span><span>Дневник</span></div>
+        <div class="profile-card"><div class="avatar">ВП</div><div><strong>Студент</strong><span>ТГР-26-1</span></div><button class="icon-button" aria-label="Настройки">⚙</button></div>
+        <nav class="nav-list" aria-label="Основная навигация">
+          <button class="nav-item active" data-view="dashboard"><span>⌂</span>Главная</button>
+          <button class="nav-item" data-view="schedule"><span>▦</span>Расписание</button>
+          <button class="nav-item" data-view="calendar"><span>◷</span>Календарь</button>
+          <button class="nav-item" data-view="tasks"><span>✓</span>Задания <em id="taskBadge">3</em></button>
+          <button class="nav-item" data-view="grades"><span>★</span>Оценки</button>
+          <button class="nav-item" data-view="debts"><span>!</span>Долги <em id="debtBadge">2</em></button>
+        </nav>
+        <div class="sidebar-footer"><button class="nav-item muted" id="themeToggle"><span>☼</span>Тёмная тема</button><span class="sync-status">● Данные сохранены локально</span></div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar"><div><p class="eyebrow" id="dateLabel">Вторник, 8 сентября 2026</p><h1 id="pageTitle">Доброе утро, Влад</h1></div><div class="top-actions"><button class="outline-button" id="quickAdd">＋ Быстро добавить</button><button class="mobile-menu" aria-label="Меню">☰</button></div></header>
+        <div id="appView"></div>
+      </main>
+    </div>
+    <nav class="bottom-nav" aria-label="Мобильная навигация"></nav>
+    <div class="toast" id="toast" role="status"></div>
+    <script src="app.js"></script>
+    <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
+  </body>
+</html>

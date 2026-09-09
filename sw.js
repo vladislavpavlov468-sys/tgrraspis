@@ -1,4 +1,4 @@
-const CACHE_NAME = 'student-diary-mvp-v1';
+const CACHE_NAME = 'student-diary-mvp-v2';
 const APP_SHELL = ['/', '/index.html', '/styles.css', '/calendar-overrides.css', '/app.js', '/manifest.webmanifest', '/icon.svg'];
 
 self.addEventListener('install', event => {

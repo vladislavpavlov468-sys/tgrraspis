@@ -37,6 +37,7 @@ const dayKeys=['sunday','monday','tuesday','wednesday','thursday','friday','satu
 const currentDate=new Date();
 const todayKey=dayKeys[currentDate.getDay()];
 const currentDateLabel=currentDate.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'});
+setTimeout(()=>window.location.reload(),Math.max(1000,new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate()+1).getTime()-Date.now()+1000));
 function weekMonday(date){const d=new Date(date);const day=d.getDay();d.setHours(0,0,0,0);d.setDate(d.getDate()+(day===0?-6:1-day));return d}
 function weekType(date){const anchor=weekMonday(new Date(2026,8,7));const current=weekMonday(date);const weeks=Math.round((current-anchor)/604800000);return ((weeks%2)+2)%2===0?'II':'I'}
 function weekRangeLabel(date){const start=weekMonday(date);const end=new Date(start);end.setDate(start.getDate()+6);return `${start.getDate()}–${end.getDate()} ${end.toLocaleDateString('ru-RU',{month:'long',year:'numeric'})}`}

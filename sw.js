@@ -1,4 +1,4 @@
-const CACHE_NAME = 'student-diary-mvp-v2';
+const CACHE_NAME = 'student-diary-mvp-v3';
 const APP_SHELL = ['/', '/index.html', '/styles.css', '/calendar-overrides.css', '/app.js', '/manifest.webmanifest', '/icon.svg'];
 
 self.addEventListener('install', event => {
@@ -7,14 +7,17 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)))).then(() => self.clients.claim()));
 });
 
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
-  event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
-    const copy = response.clone();
-    caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+  const request = event.request;
+  event.respondWith(fetch(request).then(response => {
+    if (response.ok) {
+      const copy = response.clone();
+      caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+    }
     return response;
-  })));
+  }).catch(() => caches.match(request)));
 });

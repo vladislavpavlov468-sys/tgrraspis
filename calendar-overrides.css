@@ -1,4 +1,5 @@
 .main-content{min-width:0}
+body{letter-spacing:-.01em}.card,.metric,.profile-card{border-radius:22px}.primary-button,.outline-button{border-radius:980px}.card{box-shadow:0 18px 45px rgba(45,52,95,.06)}
 .calendar-grid{min-width:0}
 .calendar-day{min-width:0;min-height:190px;padding:10px;overflow:hidden}
 .calendar-date{display:flex;align-items:baseline;gap:6px}
@@ -19,3 +20,4 @@
 .profile-info{position:relative;display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}.profile-switch{padding:0;background:transparent;color:var(--accent);font-size:10px;text-align:left;cursor:pointer}.profile-menu{display:none;position:absolute;z-index:20;top:70px;left:0;min-width:190px;padding:6px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}.profile-menu.open{display:flex;flex-direction:column;gap:3px}.profile-menu button{padding:9px 10px;background:transparent;border-radius:8px;text-align:left;font-size:12px}.profile-menu button:hover{background:var(--accent-soft);color:var(--accent)}
 .lesson-part{position:relative;padding:2px 0 9px}.lesson-part+.lesson-part{margin-top:7px;padding-top:9px;border-top:1px solid var(--line)}.today-card .lesson-part+.lesson-part{border-color:rgba(255,255,255,.2)}.lesson-week{display:inline-flex;margin:0 0 4px;padding:3px 6px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font-size:10px;font-weight:800}.today-card .lesson-week{background:rgba(255,255,255,.16);color:#fff}.lesson-part .lesson-room{display:inline-block;margin-top:6px}
 .lesson-part:only-child .lesson-room{display:none}
+.item-main{flex:1;min-width:0}.item-actions{display:flex;gap:6px;align-items:flex-start;opacity:.75}.item-action{padding:5px 7px;border-radius:7px;background:var(--surface);color:var(--accent);font-size:10px;white-space:nowrap}.item-action:hover{background:var(--accent-soft)}.danger-action{color:var(--red)}.table td:last-child{white-space:nowrap}@media(max-width:680px){.item-actions{flex-direction:column;gap:3px}.item-action{font-size:9px;padding:4px 6px}}

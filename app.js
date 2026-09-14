@@ -102,3 +102,4 @@ document.querySelectorAll('.nav-item[data-view]').forEach(b=>b.addEventListener(
 document.querySelector('.bottom-nav').innerHTML=[['dashboard','⌂','Главная'],['schedule','▦','Расписание'],['tasks','✓','Задания'],['calendar','◷','Календарь']].map(x=>`<button class="nav-item ${x[0]==='dashboard'?'active':''}" data-view="${x[0]}"><span>${x[1]}</span>${x[2]}</button>`).join('');
 render();
 syncProfileUi();
+document.getElementById('profileSwitch').addEventListener('click',()=>document.getElementById('profileMenu').classList.toggle('open'));document.querySelectorAll('[data-profile]').forEach(b=>b.addEventListener('click',()=>{applyProfile(b.dataset.profile);selectedDay=todayKey;selectedWeek=weekType(currentDate);document.getElementById('profileMenu').classList.remove('open');render();syncProfileUi();toast(`Профиль ${profiles[activeProfile].name} выбран`)}));

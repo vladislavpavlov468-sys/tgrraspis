@@ -31,6 +31,45 @@ const schedule = {
     {time:'14:15–15:45',name:'Введение в специальность',detail:'Доц. Ковальский Е.Р.',room:'№403'}
   ]
 };
+const mySchedule=JSON.parse(JSON.stringify(schedule));
+const friendSchedule={
+  monday:[
+    {time:'12:35–14:05',name:'Основы организации и управления производством',detail:'Ст. пр. Лебедев А.П.',room:'I · №4516'},
+    {time:'12:35–14:05',name:'Процессы и аппараты химической технологии',detail:'Доц. Назаренко М.Ю.',room:'II · №3430'},
+    {time:'14:15–15:45',name:'Процессы и аппараты химической технологии',detail:'Доц. Георгиева Э.Ю.',room:'I · №6303'},
+    {time:'14:15–15:45',name:'Экономика отрасли',detail:'Доц. Туровская Л.Г.',room:'II · №6303'},
+    {time:'15:55–17:20',name:'Отраслевое право',detail:'Доц. Батова О.В.',room:'I · №3219'},
+    {time:'15:55–17:20',name:'Физическая и коллоидная химия',detail:'Проф. Черемисина О.В.',room:'II · №4312'}
+  ],
+  tuesday:[
+    {time:'08:50–10:20',name:'Основы теории и практики автоматизации',detail:'Доц. Петров П.А.',room:'№4312'},
+    {time:'10:35–12:05',name:'Физическая и коллоидная химия',detail:'Проф. Литвинова Т.Е.',room:'I · №6306'},
+    {time:'10:35–12:05',name:'Основы организации и управления производством',detail:'Ст. пр. Лебедев А.П.',room:'II · №6306'},
+    {time:'12:35–14:05',name:'Процессы и аппараты химической технологии',detail:'Доц. Георгиева Э.Ю.',room:'II · №3430'}
+  ],
+  wednesday:[
+    {time:'12:35–14:05',name:'Процессы и аппараты химической технологии',detail:'Доц. Назаренко М.Ю.',room:'№3430'},
+    {time:'14:15–15:45',name:'Физическая и коллоидная химия',detail:'Проф. Литвинова Т.Е.',room:'№4312'},
+    {time:'15:55–17:20',name:'Основы организации и управления производством',detail:'Доц. Васильев Ю.Н.',room:'№3531'}
+  ],
+  thursday:[
+    {time:'08:50–10:20',name:'Экономика отрасли',detail:'Доц. Столбовская Н.В.',room:'№3531'},
+    {time:'10:35–12:05',name:'Основы теории и практики автоматизации',detail:'Доц. Романова Н.А.',room:'пр. №7310'},
+    {time:'10:35–12:05',name:'Процессы и аппараты химической технологии',detail:'Доц. Георгиева Э.Ю.',room:'пр. №3430'},
+    {time:'12:35–14:05',name:'Отраслевое право',detail:'Доц. Батова О.В.',room:'пр. №4516'},
+    {time:'12:35–14:05',name:'Физическая и коллоидная химия',detail:'Проф. Литвинова Т.Е.',room:'пр. №4516'},
+    {time:'14:15–15:45',name:'Физическая культура и спорт',detail:'Обязательная факультативная дисциплина',room:''}
+  ],
+  friday:[
+    {time:'08:50–10:20',name:'Процессы и аппараты химической технологии',detail:'Доц. Георгиева Э.Ю.',room:'№6306'},
+    {time:'10:35–12:05',name:'Экономика отрасли',detail:'Доц. Туровская Л.Г.',room:'I · пр. №6306'},
+    {time:'10:35–12:05',name:'Физическая и коллоидная химия',detail:'Асс. Минина А.А.',room:'II · пр. №6306'},
+    {time:'12:35–14:05',name:'Основы теории и практики автоматизации',detail:'Доц. Романова Н.А.',room:'пр. №7218'}
+  ]
+};
+const profiles={vlad:{name:'Влад',label:'Студент',group:'ТГР-26-1',schedule:mySchedule},ignatiy:{name:'Игнатий',label:'Студент',group:'ТХН-23',schedule:friendSchedule}};
+let activeProfile=localStorage.getItem('diaryProfile')||'vlad';
+function applyProfile(key){activeProfile=profiles[key]?key:'vlad';localStorage.setItem('diaryProfile',activeProfile);dayKeys.filter(k=>k!=='sunday'&&k!=='saturday').forEach(k=>{schedule[k]=JSON.parse(JSON.stringify(profiles[activeProfile].schedule[k]||[]))})}
 const dayNames={sunday:'Воскресенье',monday:'Понедельник',tuesday:'Вторник',wednesday:'Среда',thursday:'Четверг',friday:'Пятница',saturday:'Суббота'};
 const dayShort={sunday:'ВС',monday:'ПН',tuesday:'ВТ',wednesday:'СР',thursday:'ЧТ',friday:'ПТ',saturday:'СБ'};
 const dayKeys=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
@@ -38,6 +77,7 @@ const currentDate=new Date();
 const todayKey=dayKeys[currentDate.getDay()];
 const currentDateLabel=currentDate.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'});
 setTimeout(()=>window.location.reload(),Math.max(1000,new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate()+1).getTime()-Date.now()+1000));
+applyProfile(activeProfile);
 function weekMonday(date){const d=new Date(date);const day=d.getDay();d.setHours(0,0,0,0);d.setDate(d.getDate()+(day===0?-6:1-day));return d}
 function weekType(date){const anchor=weekMonday(new Date(2026,8,7));const current=weekMonday(date);const weeks=Math.round((current-anchor)/604800000);return ((weeks%2)+2)%2===0?'II':'I'}
 function weekRangeLabel(date){const start=weekMonday(date);const end=new Date(start);end.setDate(start.getDate()+6);return `${start.getDate()}–${end.getDate()} ${end.toLocaleDateString('ru-RU',{month:'long',year:'numeric'})}`}
@@ -57,6 +97,8 @@ function debtsView(){return `<div class="view-toolbar"><div><h2 class="view-titl
 function calendarView(){const keys=['monday','tuesday','wednesday','thursday','friday',null,null];const start=weekMonday(currentDate);const dates=Array.from({length:7},(_,i)=>{const d=new Date(start);d.setDate(start.getDate()+i);return d});const eventMarkup=(key)=>{if(!key)return '<div class="calendar-empty">Выходной</div>';const items=(schedule[key]||[]).filter(x=>!x.room||!/^(I|II) ·/.test(x.room)||x.room.startsWith(`${selectedWeek} ·`));if(!items.length)return '<div class="calendar-empty">Нет занятий</div>';return `<div class="calendar-events">${items.map(x=>`<div class="calendar-event"><span>${x.time}</span><b>${x.name}</b>${x.room?`<small>${x.room}</small>`:''}</div>`).join('')}</div>`};return `<div class="view-toolbar"><div><h2 class="view-title">Календарь недели</h2><p class="card-subtitle">${weekRangeLabel(currentDate)} · текущая неделя ${selectedWeek}</p></div><button class="primary-button">Сегодня · ${dayShort[todayKey]}, ${currentDateLabel}</button></div><section class="card"><div class="calendar-grid">${dates.map((date,i)=>`<div class="calendar-head">${dayShort[keys[i]||dayKeys[date.getDay()]||'sunday']}</div>`).join('')}${dates.map((date,i)=>{const key=keys[i];const isToday=date.toDateString()===currentDate.toDateString();return `<div class="calendar-day ${isToday?'today':''}"><div class="calendar-date"><strong>${date.getDate()}</strong><span>${key?dayNames[key]:''}</span></div>${eventMarkup(key)}</div>`}).join('')}</div></section>`}
 function render(){const views={dashboard:dashboard,schedule:scheduleView,calendar:calendarView,tasks:tasksView,grades:gradesView,debts:debtsView};appView.innerHTML=views[view]();document.getElementById('dateLabel').textContent=`${dayNames[todayKey]}, ${currentDateLabel}`;document.querySelectorAll('.nav-item[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view));document.getElementById('pageTitle').textContent=view==='dashboard'?'Доброе утро, Влад':({schedule:'Расписание',calendar:'Календарь',tasks:'Задания',grades:'Оценки',debts:'Учебные долги'}[view]);document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;render()}));document.querySelectorAll('[data-view-link]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.viewLink;render()}));document.querySelectorAll('[data-day]').forEach(b=>b.addEventListener('click',()=>{selectedDay=b.dataset.day;render()}));document.querySelectorAll('[data-week]').forEach(b=>b.addEventListener('click',()=>{selectedWeek=b.dataset.week;render()}));document.querySelectorAll('[data-task]').forEach(b=>b.addEventListener('click',()=>{tasks[b.dataset.task].done=!tasks[b.dataset.task].done;save();render();toast('Статус задания обновлён')}));document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>quickAction(b.dataset.action)));document.getElementById('taskBadge').textContent=tasks.filter(t=>!t.done).length}
 function quickAction(type){if(type==='task'){const title=prompt('Название задания');if(title){tasks.push({title,subject:'Общее',due:'Без срока',priority:'Средний',done:false});save();render();toast('Задание добавлено')}}else if(type==='grade'){toast('Форма оценок будет добавлена следующим шагом')}else{toast('Форма долгов будет добавлена следующим шагом')}}
-document.querySelectorAll('.nav-item[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;render()}));document.getElementById('quickAdd').addEventListener('click',()=>quickAction('task'));document.getElementById('themeToggle').addEventListener('click',()=>{document.body.classList.toggle('dark');toast('Тема переключена')});
+function syncProfileUi(){const profile=profiles[activeProfile];document.getElementById('profileName').textContent=profile.name;document.getElementById('profileGroup').textContent=profile.group;document.getElementById('profileAvatar').textContent=profile.name==='Игнатий'?'И':'ВП';document.getElementById('profileSelect').value=activeProfile;document.getElementById('pageTitle').textContent=view==='dashboard'?`Доброе утро, ${profile.name}`:({schedule:'Расписание',calendar:'Календарь',tasks:'Задания',grades:'Оценки',debts:'Учебные долги'}[view]);const scheduleSubtitle=[...document.querySelectorAll('.card-subtitle')].find(el=>el.textContent.includes('Группа ТГР-26-1'));if(scheduleSubtitle)scheduleSubtitle.textContent=`Группа ${profile.group} · осенний семестр 2026–2027`}
+document.querySelectorAll('.nav-item[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;render();syncProfileUi()}));document.getElementById('quickAdd').addEventListener('click',()=>quickAction('task'));document.getElementById('themeToggle').addEventListener('click',()=>{document.body.classList.toggle('dark');toast('Тема переключена')});document.getElementById('profileSelect').addEventListener('change',e=>{applyProfile(e.target.value);selectedDay=todayKey;selectedWeek=weekType(currentDate);render();syncProfileUi();toast(`Профиль ${profiles[activeProfile].name} выбран`)});
 document.querySelector('.bottom-nav').innerHTML=[['dashboard','⌂','Главная'],['schedule','▦','Расписание'],['tasks','✓','Задания'],['calendar','◷','Календарь']].map(x=>`<button class="nav-item ${x[0]==='dashboard'?'active':''}" data-view="${x[0]}"><span>${x[1]}</span>${x[2]}</button>`).join('');
 render();
+syncProfileUi();

@@ -88,6 +88,7 @@ let debts=JSON.parse(localStorage.getItem('diaryDebts')||'null')||[{subject:'Т�
 function saveGrades(){localStorage.setItem('diaryGrades',JSON.stringify(grades))}function saveDebts(){localStorage.setItem('diaryDebts',JSON.stringify(debts))}
 let view='dashboard'; let selectedDay=todayKey; let selectedWeek=weekType(currentDate);
 const appView=document.getElementById('appView');
+const profileHeaderObserver=new MutationObserver(()=>{const title=document.getElementById('pageTitle');const profile=profiles[activeProfile];if(title&&view==='dashboard'){const expected=`Доброе утро, ${profile.name}`;if(title.textContent!==expected)title.textContent=expected}});profileHeaderObserver.observe(document.body,{childList:true,subtree:true});
 const weekSwitchObserver=new MutationObserver(()=>document.querySelectorAll('.week-switch button').forEach(b=>{if(!b.dataset.week){b.dataset.week=b.textContent.trim();b.addEventListener('click',()=>{selectedWeek=b.dataset.week;render()})}b.classList.toggle('active',b.textContent.trim()===selectedWeek)}));weekSwitchObserver.observe(appView,{childList:true,subtree:true});
 function save(){localStorage.setItem('diaryTasks',JSON.stringify(tasks));}
 function toast(message){const el=document.getElementById('toast');el.textContent=message;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200)}
